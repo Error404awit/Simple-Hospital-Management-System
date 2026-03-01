@@ -4,11 +4,13 @@ import Caduceus from "../assets/caduceus.png";
 
 const Navbar = () => {
   return (
-    <header className="pr-4 bg-sky-500 flex justify-between h-[92px] w-screen">
+    <header className="pr-4 bg-sky-400 flex justify-between h-[92px] w-screen">
       <div className="h-full flex items-center">
         <img src={Caduceus} alt="Logo" className="p-2 h-full"></img>
         <Link to="/">
-          <h1 className="text-3xl font-bold">San Miguel Medical Center</h1>
+          <h1 className="text-3xl font-bold">
+            St. Camillus de Lellis Medical Center
+          </h1>
         </Link>
       </div>
       <nav className="w-1/4">

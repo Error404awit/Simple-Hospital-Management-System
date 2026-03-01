@@ -1,25 +1,19 @@
 import React, { useState } from "react";
-import { CiEdit } from "react-icons/ci";
-import { TiUserDeleteOutline } from "react-icons/ti";
-import { IoSaveOutline, IoCloseOutline, IoPersonSharp } from "react-icons/io5";
-import { LiaBirthdayCakeSolid } from "react-icons/lia";
-import { CgGenderFemale, CgGenderMale } from "react-icons/cg";
+import { CiEdit, CiTrash, CiCircleCheck, CiCircleRemove } from "react-icons/ci";
 
-const PatientCard = ({ pat, onEdit, onDelete }) => {
+const PatientCard = ({ pat, onEdit, onDelete, onRequestDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newName, setNewName] = useState(pat.name);
   const [newAge, setNewAge] = useState(pat.age);
   const [newGender, setNewGender] = useState(pat.gender);
-  const [del, setDel] = useState(false);
 
   const handleUpdate = () => {
     onEdit(pat._id, newName, newAge, newGender);
     setIsEditing(false);
   };
   return (
-    <div className="h-2/5 mt-16 mx-auto w-[80%] card rounded-md flex flex-col justify-evenly last:mb-28">
-      <div className={del ? "hidden" : "p-5 mx-4 flex justify-start gap-x-3"}>
-        <IoPersonSharp className="text-3xl" />
+    <tr className="hover:bg-gray-50 transition duration-200">
+      <td className="px-6 py-4 font-medium text-gray-700">
         {isEditing ? (
           <input
             type="text"
@@ -27,15 +21,13 @@ const PatientCard = ({ pat, onEdit, onDelete }) => {
             onChange={(event) => {
               setNewName(event.target.value);
             }}
-            className=" border border-1 border-[#cccccc] rounded grow"
+            className="border border-1 border-[#cccccc] rounded-md w-full px-2 py-1 text-sm"
           />
         ) : (
-          <h1 className="my-[0.20] text-xl">{pat.name}</h1>
+          pat.name
         )}
-      </div>
-
-      <div className={del ? "hidden" : "p-5 mx-4 flex justify-start gap-x-3"}>
-        <LiaBirthdayCakeSolid className="text-3xl" />
+      </td>
+      <td className="px-6 py-4 text-sm text-gray-700">
         {isEditing ? (
           <input
             type="text"
@@ -43,18 +35,13 @@ const PatientCard = ({ pat, onEdit, onDelete }) => {
             onChange={(event) => {
               setNewAge(event.target.value);
             }}
-            className="border border-1 border-[#cccccc] rounded grow"
+            className="border border-1 border-[#cccccc] rounded-md w-full px-2 py-1 text-sm"
           />
         ) : (
-          <h2 className="my-[0.20] text-xl">{pat.age}</h2>
+          pat.age
         )}
-      </div>
-
-      <div className={del ? "hidden" : "p-5 mx-4 flex justify-start gap-x-3"}>
-        <div className="flex">
-          <CgGenderMale className="text-3xl" />
-          <CgGenderFemale className="text-3xl" />
-        </div>
+      </td>
+      <td className="px-6 py-4 text-sm text-gray-700">
         {isEditing ? (
           <input
             type="text"
@@ -62,69 +49,43 @@ const PatientCard = ({ pat, onEdit, onDelete }) => {
             onChange={(event) => {
               setNewGender(event.target.value);
             }}
-            className="border border-1 border-[#cccccc] rounded grow"
+            className="border border-1 border-[#cccccc] rounded-md w-full px-2 py-1 text-sm"
           />
         ) : (
-          <h2 className="my-[0.20] text-xl">{pat.gender}</h2>
+          pat.gender
         )}
-      </div>
-
-      {/*buttons*/}
-      <div className={del ? "hidden" : "flex justify-evenly p-4 text-3xl"}>
+      </td>
+      <td className="px-6 py-4 text-2xl">
         {isEditing ? (
-          <IoSaveOutline
+          <CiCircleCheck
             onClick={() => {
               handleUpdate();
             }}
-            className="text-green-800 cursor-pointer"
+            className="text-green-600 cursor-pointer"
           />
         ) : (
           <CiEdit
             onClick={() => {
               setIsEditing(true);
             }}
-            className="text-green-800 cursor-pointer"
+            className="text-green-600 cursor-pointer"
           />
         )}
+      </td>
+      <td className="px-6 py-4 text-2xl">
         {isEditing ? (
-          <IoCloseOutline
+          <CiCircleRemove
             className="text-red-600 cursor-pointer"
             onClick={() => setIsEditing(false)}
           />
         ) : (
-          <TiUserDeleteOutline
+          <CiTrash
             className="text-red-600 cursor-pointer"
-            onClick={() => setDel(true)}
+            onClick={onRequestDelete}
           />
         )}
-      </div>
-
-      {del ? (
-        <div className="w-full h-full flex flex-col items-center gap-4">
-          <h1 className="text-lg my-10 px-4">
-            Are you sure you want to delete this paient?
-          </h1>
-          <button
-            onClick={() => {
-              setDel(false);
-            }}
-            className="rounded-md border-2 border-red-600 hover:bg-red-600 ease-in-out w-3/5 p-2"
-          >
-            No
-          </button>
-          <button
-            onClick={() => {
-              onDelete(pat._id);
-            }}
-            className="rounded-md border-2 border-green-800 hover:bg-green-800 w-3/5 p-2"
-          >
-            Yes
-          </button>
-        </div>
-      ) : (
-        ""
-      )}
-    </div>
+      </td>
+    </tr>
   );
 };
 

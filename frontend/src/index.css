@@ -4,9 +4,9 @@
 
 @layer components {
   .active {
-    background-color: #333;
+    background-color: #0369a1;
     color: #fff;
-    border-radius: 5px;
+    border-radius: 50px;
   }
 
   .card {
